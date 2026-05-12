@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QuizMaster</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- PANTALLA 1: INICIO -->
+  <div class="pantalla" id="inicio">
+    <h1>⚡ QuizMaster</h1>
+    <p>Elegí una categoría y poné a prueba tus conocimientos</p>
+
+    <!-- Las categorías se generan con JS -->
+    <div id="categorias"></div>
+
+    <!-- Dificultad -->
+    <div id="dificultad">
+      <button class="diff activo" data-diff="facil">Fácil</button>
+      <button class="diff" data-diff="medio">Medio</button>
+      <button class="diff" data-diff="dificil">Difícil</button>
+    </div>
+
+    <button id="btn-jugar">¡Jugar!</button>
+  </div>
+
+  <!-- PANTALLA 2: JUEGO -->
+  <div class="pantalla oculto" id="juego">
+    <div id="barra-progreso">
+      <div id="progreso-fill"></div>
+    </div>
+    <span id="contador">Pregunta 1 de 10</span>
+    <div id="timer">⏱ <span id="tiempo">15</span>s</div>
+    <h2 id="pregunta"></h2>
+    <div id="opciones"></div>
+  </div>
+
+  <!-- PANTALLA 3: RESULTADO -->
+  <div class="pantalla oculto" id="resultado">
+    <div id="emoji-resultado"></div>
+    <h2 id="titulo-resultado"></h2>
+    <p id="puntaje-texto"></p>
+    <div id="resumen"></div>
+    <button id="btn-reiniciar">Jugar de nuevo</button>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

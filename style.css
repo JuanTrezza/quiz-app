@@ -1,0 +1,421 @@
+/* ================================
+   VARIABLES Y RESET
+   ================================ */
+
+/* Las variables CSS son como constantes.
+   Las definís una vez acá y las usás en todo el archivo.
+   Si querés cambiar el color principal, solo cambiás acá. */
+
+:root {
+  --primario: #6c63ff;      /* morado principal */
+  --primario-dark: #4b44cc; /* morado más oscuro para hover */
+  --acento: #ff6584;        /* rosa para detalles */
+  --correcto: #2ecc71;      /* verde para respuesta correcta */
+  --incorrecto: #e74c3c;    /* rojo para respuesta incorrecta */
+  --bg: #0f0f1a;            /* fondo oscuro */
+  --card: #1a1a2e;          /* fondo de las tarjetas */
+  --texto: #f0f0f0;         /* texto principal */
+  --texto-suave: #a0a0b8;   /* texto secundario */
+  --borde: #2a2a4a;         /* bordes */
+  --radio: 16px;            /* border-radius consistente */
+  --sombra: 0 8px 32px rgba(0,0,0,0.4);
+}
+
+/* Reset básico: elimina márgenes y paddings
+   que los navegadores ponen por defecto */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box; /* el padding no agranda el elemento */
+}
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background-color: var(--bg);
+  color: var(--texto);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+/* ================================
+   SISTEMA DE PANTALLAS
+   ================================ */
+
+/* Todas las pantallas ocupan el mismo espacio */
+.pantalla {
+  width: 100%;
+  max-width: 640px;
+  animation: aparecer 0.4s ease;
+}
+
+/* La clase .oculto la agrega/quita JavaScript
+   para mostrar u ocultar cada pantalla */
+.oculto {
+  display: none !important;
+}
+
+/* Animación de entrada suave cuando aparece una pantalla */
+@keyframes aparecer {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ================================
+   PANTALLA DE INICIO
+   ================================ */
+
+#inicio h1 {
+  font-family: 'Syne', sans-serif;
+  font-size: 2.8rem;
+  font-weight: 800;
+  text-align: center;
+  margin-bottom: 8px;
+  background: linear-gradient(135deg, var(--primario), var(--acento));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent; /* hace el degradé en el texto */
+}
+
+#inicio p {
+  text-align: center;
+  color: var(--texto-suave);
+  margin-bottom: 32px;
+  font-size: 1.05rem;
+}
+
+/* Grid de categorías: 2 columnas en desktop, 1 en mobile */
+#categorias {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+/* Cada botón de categoría */
+.btn-categoria {
+  background: var(--card);
+  border: 2px solid var(--borde);
+  border-radius: var(--radio);
+  padding: 16px;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.2s ease;
+  color: var(--texto);
+}
+
+/* Hover: se levanta con sombra */
+.btn-categoria:hover {
+  border-color: var(--primario);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 20px rgba(108, 99, 255, 0.3);
+}
+
+/* Cuando está seleccionada */
+.btn-categoria.seleccionado {
+  border-color: var(--primario);
+  background: rgba(108, 99, 255, 0.15);
+}
+
+.btn-categoria .cat-icon {
+  font-size: 1.8rem;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.btn-categoria .cat-nombre {
+  font-weight: 600;
+  font-size: 1rem;
+  display: block;
+}
+
+.btn-categoria .cat-info {
+  font-size: 0.8rem;
+  color: var(--texto-suave);
+  margin-top: 2px;
+}
+
+/* Dificultad */
+#dificultad {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 24px;
+  justify-content: center;
+}
+
+.diff {
+  padding: 8px 20px;
+  border-radius: 999px; /* píldora */
+  border: 2px solid var(--borde);
+  background: transparent;
+  color: var(--texto-suave);
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.9rem;
+  transition: all 0.2s;
+}
+
+.diff.activo {
+  background: var(--primario);
+  border-color: var(--primario);
+  color: white;
+  font-weight: 600;
+}
+
+/* Botón principal */
+#btn-jugar {
+  width: 100%;
+  padding: 16px;
+  background: linear-gradient(135deg, var(--primario), var(--acento));
+  border: none;
+  border-radius: var(--radio);
+  color: white;
+  font-size: 1.1rem;
+  font-weight: 700;
+  font-family: 'Syne', sans-serif;
+  cursor: pointer;
+  transition: all 0.2s;
+  letter-spacing: 0.5px;
+}
+
+#btn-jugar:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(108, 99, 255, 0.5);
+}
+
+#btn-jugar:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* ================================
+   PANTALLA DE JUEGO
+   ================================ */
+
+/* Barra de progreso arriba */
+#barra-progreso {
+  background: var(--borde);
+  height: 6px;
+  border-radius: 999px;
+  margin-bottom: 20px;
+  overflow: hidden;
+}
+
+#progreso-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primario), var(--acento));
+  border-radius: 999px;
+  /* transition suave cuando avanza */
+  transition: width 0.4s ease;
+  width: 0%;
+}
+
+/* Fila de info: pregunta X de Y + timer */
+.juego-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+#contador {
+  color: var(--texto-suave);
+  font-size: 0.9rem;
+}
+
+#timer {
+  background: var(--card);
+  border: 2px solid var(--borde);
+  border-radius: 999px;
+  padding: 4px 14px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  transition: all 0.3s;
+}
+
+/* Timer se pone rojo cuando queda poco tiempo */
+#timer.urgente {
+  border-color: var(--incorrecto);
+  color: var(--incorrecto);
+  animation: pulso 0.5s infinite alternate;
+}
+
+@keyframes pulso {
+  from { transform: scale(1); }
+  to   { transform: scale(1.05); }
+}
+
+/* La pregunta */
+#pregunta {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  line-height: 1.4;
+  margin-bottom: 24px;
+  min-height: 80px;
+}
+
+/* Grid de opciones: 2 columnas */
+#opciones {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+/* Cada opción de respuesta */
+.opcion {
+  background: var(--card);
+  border: 2px solid var(--borde);
+  border-radius: var(--radio);
+  padding: 16px;
+  cursor: pointer;
+  text-align: left;
+  color: var(--texto);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.95rem;
+  line-height: 1.4;
+  transition: all 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+
+.opcion:hover:not(:disabled) {
+  border-color: var(--primario);
+  transform: translateY(-2px);
+}
+
+/* Respuesta correcta */
+.opcion.correcta {
+  border-color: var(--correcto);
+  background: rgba(46, 204, 113, 0.15);
+  color: var(--correcto);
+}
+
+/* Respuesta incorrecta */
+.opcion.incorrecta {
+  border-color: var(--incorrecto);
+  background: rgba(231, 76, 60, 0.15);
+  color: var(--incorrecto);
+}
+
+/* Cuando ya se respondió, deshabilitamos clicks */
+.opcion:disabled {
+  cursor: not-allowed;
+}
+
+/* ================================
+   PANTALLA DE RESULTADO
+   ================================ */
+
+#resultado {
+  text-align: center;
+}
+
+#emoji-resultado {
+  font-size: 5rem;
+  margin-bottom: 16px;
+  animation: bounce 0.6s ease;
+}
+
+@keyframes bounce {
+  0%   { transform: scale(0); }
+  60%  { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+
+#titulo-resultado {
+  font-family: 'Syne', sans-serif;
+  font-size: 2rem;
+  font-weight: 800;
+  margin-bottom: 8px;
+}
+
+#puntaje-texto {
+  color: var(--texto-suave);
+  font-size: 1.1rem;
+  margin-bottom: 32px;
+}
+
+/* Resumen de respuestas */
+#resumen {
+  background: var(--card);
+  border-radius: var(--radio);
+  padding: 20px;
+  margin-bottom: 24px;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-height: 280px;
+  overflow-y: auto;
+}
+
+.resumen-item {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  font-size: 0.9rem;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--borde);
+}
+
+.resumen-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.resumen-icono {
+  font-size: 1rem;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.resumen-pregunta {
+  color: var(--texto-suave);
+  flex: 1;
+}
+
+.resumen-respuesta {
+  font-weight: 600;
+}
+
+.resumen-respuesta.ok { color: var(--correcto); }
+.resumen-respuesta.mal { color: var(--incorrecto); }
+
+#btn-reiniciar {
+  width: 100%;
+  padding: 16px;
+  background: linear-gradient(135deg, var(--primario), var(--acento));
+  border: none;
+  border-radius: var(--radio);
+  color: white;
+  font-size: 1.1rem;
+  font-weight: 700;
+  font-family: 'Syne', sans-serif;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+#btn-reiniciar:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(108, 99, 255, 0.5);
+}
+
+/* ================================
+   RESPONSIVE — MOBILE
+   ================================ */
+
+@media (max-width: 480px) {
+  #inicio h1 { font-size: 2rem; }
+  #categorias { grid-template-columns: 1fr; }
+  #opciones { grid-template-columns: 1fr; }
+  #pregunta { font-size: 1.2rem; }
+}
